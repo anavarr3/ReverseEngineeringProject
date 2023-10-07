@@ -25,20 +25,33 @@ In this notebook, we are reverse engineering the story, [STORY NAME](STORY URL)
 Loading required libraries for this analysis.
 
 ```{r echo=FALSE, message=FALSE}
+library(tidyverse)
+library(dplyr)
+library(janitor)
+library(readr)
+library(refinr)
 
 ```
 
 ## Load and Cleaning Data
+
 
 In this section, describe the source of the data, write a basic data dictionary for data you are working with, and discuss any caveats or issues you discovered working with this data. 
 
 ```{r}
 # Load required data
 
+
 # Path to data should be loaded from folder "data" i.e. read_csv("data/name_of_data.csv")
+
+dc_data <- read_csv("data/dc-wikia-data.csv")
+marvel_data <- read_csv("data/marvel-wikia-data.csv")
 
 # Clean required data and prepare for analysis if needed. 
 
+clean_dc <- clean_names(dc_data)
+
+clean_marvel <- clean_names(marvel_data)
 
 ```
 
@@ -47,11 +60,27 @@ In this notebook, we are reverse engineering five sentences from the story.
 
 ### Sentence 1
 
-* **Sentence text**: [Paste in sentence to engineer here]
+* **Sentence text**: Women were substantially underrepresented among characters with at least one appearance. Among the characters for which we have gender data,12 females made up only 29.3 percent of the DC character list and 24.7 percent of the Marvel roster.
 * **Analysis summary**: [Write up two to three sentences describing the results of your analysis.  Were you able to confirm the finding? If not, why not?]
 
 ```{r}
 # Put code to reverse engineer sentence here
+
+clean_dc |> 
+  filter(appearances >= 1) |> 
+  group_by(sex) |> 
+   summarise(
+    count=n()) |> 
+  arrange(desc(count)) |> 
+  mutate(percentage = (count/sum(count)*100))
+
+clean_marvel |> 
+  filter(appearances >= 1) |> 
+  group_by(sex) |> 
+   summarise(
+    count=n()) |> 
+  arrange(desc(count)) |> 
+  mutate(percentage = (count/sum(count)*100))
 
 # Display results of code below this codeblock
 
