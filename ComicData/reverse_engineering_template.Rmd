@@ -151,6 +151,19 @@ marvel_girls_gays_they |>
 
 * **Sentence text**: In both DC and Marvel, women were of neutral allegiance at a higher rate than men. Men were also more likely to be bad in each universe — in fact, bad-aligned men alone outnumbered all women combined. In other words, there’s something of a paucity of female villains.
 * **Analysis summary**: We found that it holds true that women were less likely to have an evil alignment than men but were more likely to be neutral in both DC and Marvel comics. The original data and our data compare alignment within the sex category.
+We found the following statistics with the data:
+DC:
+Evil men: 46.1%
+Evil women: 30.2%
+Neutral men: 7.7%
+Neutral women: 10.2%
+
+Marvel:
+Evil men: 46.4%
+Evil women: 25.7%
+Neutral men: 12.4%
+Neutral women: 17%
+
 
 
 ```{r}
