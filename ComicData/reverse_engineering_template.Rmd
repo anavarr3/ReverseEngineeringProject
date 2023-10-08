@@ -61,8 +61,7 @@ In this notebook, we are reverse engineering five sentences from the story.
 ### Sentence 1
 
 * **Sentence text**: Women were substantially underrepresented among characters with at least one appearance. Among the characters for which we have gender data,12 females made up only 29.3 percent of the DC character list and 24.7 percent of the Marvel roster.
-* **Analysis summary**: [Write up two to three sentences describing the results of your analysis.  Were you able to confirm the finding? If not, why not?]
-
+* **Analysis summary**: In our replication of the findings, we found the representation of women in comics is actually a little lower than the percentage the author found for each comic company. Hickey stated that women made up only 29.3% of the DC character list but we found in the data that they only represented 23.6% of DC characters. Hickey also stated that women made up 24.7% of the Marvel roster but we found that they only accounted for 23.6%. 
 ```{r}
 # Put code to reverse engineer sentence here
 
@@ -95,9 +94,31 @@ clean_marvel |>
 
 ```{r}
 # Put code to reverse engineer sentence here
+dc_girls_gays_theys <- clean_dc |>
+  filter(!is.na(gsm))
 
+```
+
+
+```{r}
 # Display results of code below this codeblock
+dc_girls_gays_theys |>
+  group_by(year) |>
+  summarise(
+    count_year=n()
+  )
+```
+```{r}
+marvel_girls_gays_they <- clean_marvel |>
+  filter(!is.na(gsm))
+```
 
+```{r}
+marvel_girls_gays_they |>
+  group_by(year) |>
+  summarise(
+    count_year=n()
+  )
 ```
 
 ### Sentence 3
