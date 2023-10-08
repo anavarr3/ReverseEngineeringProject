@@ -73,6 +73,8 @@ clean_dc |>
     count=n()) |> 
   arrange(desc(count)) |> 
   mutate(percentage = (count/sum(count)*100))
+```
+```{r}
 
 clean_marvel |> 
   filter(appearances >= 1) |> 
@@ -88,7 +90,7 @@ clean_marvel |>
 
 ### Sentence 2
 
-* **Sentence text**: [Paste in sentence to engineer here]
+* **Sentence text**: Publishing houses have also sought to introduce more gay, lesbian, bisexual and transgender characters into their stories. In some cases, both DC and Marvel have retroactively categorized a longstanding character as LGBT.
 * **Analysis summary**: [Write up two to three sentences describing the results of your analysis.  Were you able to confirm the finding? If not, why not?]
 
 ```{r}
