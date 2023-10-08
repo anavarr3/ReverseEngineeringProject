@@ -1,7 +1,8 @@
 ---
-title: "Reverse Engineering Project"
-author: "Student names here"
-date: "Date here"
+title: "Reverse Engineering Project" https://fivethirtyeight.com/features/women-in-comic-books/
+
+author: Steven Adriana Andrea 
+date: October 8, 2023
 output:
   html_document:
     theme: cerulean
@@ -90,7 +91,8 @@ clean_marvel |>
 ### Sentence 2
 
 * **Sentence text**: Publishing houses have also sought to introduce more gay, lesbian, bisexual and transgender characters into their stories. In some cases, both DC and Marvel have retroactively categorized a longstanding character as LGBT.
-* **Analysis summary**: [Write up two to three sentences describing the results of your analysis.  Were you able to confirm the finding? If not, why not?]
+* **Analysis summary**: We found in our findings that LGBTQ+ characters in Marvel had a little bit of a boom in the 2000s. Every year from 2000-2013 introduced a new LGBTQ+ character. There were even a few in the 1990s, 80s and 70s, though one wasn’t introduced each year. Four LGBTQ+ characters were introduced in the 40s and then none were introduced in the 50s. For DC Comics, a new LGBTQ+ character isn’t introduced each year from 2000-2010, but there is typically more than one introduced during the represented years. There were five LGBTQ+ characters introduced in 1987, 1988 and 1989 – something that didn’t happen again until 2003. It is unclear if the LGBTQ+ characters in the earlier years were ones that were planned to be LGBTQ+ or if they were retroactively categorized as such.
+
 
 ```{r}
 # Put code to reverse engineer sentence here
@@ -123,7 +125,7 @@ marvel_girls_gays_they |>
 
 ### Sentence 3
 
-* **Sentence text**: [Paste in sentence to engineer here]
+* **Sentence text**: Tim Hanley, is a comics historian and researcher who analyzed every comic book release in 2011 by Marvel and DC Comics. Hanley found that that men outnumbered women nine-to-one behind the scenes at both DC and Marvel. He also estimated that 79 percent of people working on comics this year were white. 
 * **Analysis summary**: [Write up two to three sentences describing the results of your analysis.  Were you able to confirm the finding? If not, why not?]
 
 ```{r}
@@ -135,7 +137,7 @@ marvel_girls_gays_they |>
 
 ### Sentence 4
 
-* **Sentence text**: [Paste in sentence to engineer here]
+* **Sentence text**: Members within the comic book industry make attempts themselves to find out exactly who their readers are. John Jackson Miller, who runs Comichron, a site that monitors detailed sales data for the comic book industry. There have been a number of attempts to count how many readers are women, but none was comprehensive enough.
 * **Analysis summary**: [Write up two to three sentences describing the results of your analysis.  Were you able to confirm the finding? If not, why not?]
 
 ```{r}
@@ -147,14 +149,30 @@ marvel_girls_gays_they |>
 
 ### Sentence 5
 
-* **Sentence text**: [Paste in sentence to engineer here]
-* **Analysis summary**: [Write up two to three sentences describing the results of your analysis.  Were you able to confirm the finding? If not, why not?]
+* **Sentence text**: In both DC and Marvel, women were of neutral allegiance at a higher rate than men. Men were also more likely to be bad in each universe — in fact, bad-aligned men alone outnumbered all women combined. In other words, there’s something of a paucity of female villains.
+* **Analysis summary**: We found that it holds true that women were less likely to have an evil alignment than men but were more likely to be neutral in both DC and Marvel comics. The original data and our data compare alignment within the sex category.
+
 
 ```{r}
 # Put code to reverse engineer sentence here
-
+clean_dc |> 
+  filter(appearances >= 1) |> 
+  group_by(sex, align) |> 
+   summarise(
+    count=n()) |> 
+  arrange(desc(count)) |> 
+  mutate(percentage = (count/sum(count)*100))
 # Display results of code below this codeblock
+```
 
+```{r}
+clean_marvel |> 
+  filter(appearances >= 1) |> 
+  group_by(sex, align) |> 
+   summarise(
+    count=n()) |> 
+  arrange(desc(count)) |> 
+  mutate(percentage = (count/sum(count)*100))
 ```
 
 -30-
