@@ -49,7 +49,7 @@ dc_data <- read_csv("data/dc-wikia-data.csv")
 marvel_data <- read_csv("data/marvel-wikia-data.csv")
 
 dc_womenincomics2014_comparedto2013 <- read_csv("data/DC 2014 Women In Comics Stats.csv")
-marvel_womenincomics2014 <- read_csv("data/MARVEL 2014 Women In Comics Stats.csv")
+marvel_womenincomics2014_comparedto2013 <- read_csv("data/MARVEL 2014 Women In Comics Stats.csv")
 
 dc_womenincomics2014_month <- read_csv("data/MONTH DC Women In Comics 2014.csv")
 marvel_womenincomics2014_month <- read_csv("data/MONTH MARVEL Women In Comics 2014.csv")
@@ -60,8 +60,6 @@ clean_dc <- clean_names(dc_data)
 
 clean_marvel <- clean_names(marvel_data)
 
-
-view(dc_data)
 ```
 
 ## Sentences to Engineer
@@ -138,22 +136,55 @@ marvel_girls_gays_they |>
 
 ### Sentence 3
 
-* **Sentence text**: Tim Hanley, is a comics historian and researcher who analyzed every comic book release in 2011 by Marvel and DC Comics. Hanley found that that men outnumbered women nine-to-one behind the scenes at both DC and Marvel. He also estimated that 79 percent of people working on comics this year were white. 
+* **Sentence text**: Women and men were almost exactly equally likely to have a secret identity in the Marvel universe (49.4 percent of males and 49.5 percent of females), while in the DC universe 51 percent of males had a secret identity and 45 percent of females did.
+
 * **Analysis summary**: [Write up two to three sentences describing the results of your analysis.  Were you able to confirm the finding? If not, why not?]
+
+Like sentence 1, we had to take out the characters that could not have a gender as well as the characters that could not have a secret identity (we figured these were more of background/filler characters). Once we took out those characters, we were able to come to the same conclusion as Hickey. The Marvel one was slightly different. We still ended up with 49.4 percent of males but 49.4 percent for females as well instead of 49.5.
+
 
 ```{r}
 # Put code to reverse engineer sentence here
 
-womenincomics <- read_csv(data/"2013 Women In")
+#Who are the people with no ID?
+
+no_id <- clean_dc |> 
+  filter(is.na(id))
+
+no_id
+
+# They are more side characters than heroes. We can likely exclude them from the code to get to the author's main findings
+
+# Here we're looking for the secret identity split up in DC Comics
+dc_secret_identity <- clean_dc |> 
+filter(!is.na(sex),
+       (!is.na(id))) |> 
+group_by(sex, id) |> 
+summarise(count=n()) |> 
+mutate(percentage = (count/sum(count)*100)) |> 
+arrange(desc(count))
 
 
-# Display results of code below this codeblock
-
+# Now for Marvel
+marvel_secret_identity <- clean_marvel |> 
+  filter(!is.na(id),
+       (!is.na(id))) |> 
+group_by(sex, id) |> 
+summarise(count=n()) |> 
+mutate(percentage = (count/sum(count)*100)) |> 
+arrange(desc(count))
 ```
+
+```{r}
+# Display results of code below this codeblock
+view(dc_secret_identity)
+view(marvel_secret_identity)
+```
+
 
 ### Sentence 4
 
-* **Sentence text**: Members within the comic book industry make attempts themselves to find out exactly who their readers are. John Jackson Miller, who runs Comichron, a site that monitors detailed sales data for the comic book industry. There have been a number of attempts to count how many readers are women, but none was comprehensive enough.
+* **Sentence text**: He also estimated that 79 percent of people working on comics this year were white. 
 * **Analysis summary**: [Write up two to three sentences describing the results of your analysis.  Were you able to confirm the finding? If not, why not?]
 
 ```{r}
