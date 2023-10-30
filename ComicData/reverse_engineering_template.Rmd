@@ -54,6 +54,8 @@ clean_dc <- clean_names(dc_data)
 
 clean_marvel <- clean_names(marvel_data)
 
+
+view(dc_data)
 ```
 
 ## Sentences to Engineer
@@ -61,23 +63,26 @@ In this notebook, we are reverse engineering five sentences from the story.
 
 ### Sentence 1
 
-* **Sentence text**: Women were substantially underrepresented among characters with at least one appearance. Among the characters for which we have gender data,12 females made up only 29.3 percent of the DC character list and 24.7 percent of the Marvel roster.
-* **Analysis summary**: In our replication of the findings, we found the representation of women in comics is actually a little lower than the percentage the author found for each comic company. Hickey stated that women made up only 29.3% of the DC character list but we found in the data that they only represented 23.6% of DC characters. Hickey also stated that women made up 24.7% of the Marvel roster but we found that they only accounted for 23.6%. 
+* **Sentence text**: Women were substantially underrepresented among characters with at least one appearance. Among the characters for which we have gender data, 12 females made up only 29.3 percent of the DC character list and 24.7 percent of the Marvel roster.
+* **Analysis summary**: In our replication of the findings, we found the representation of women in comics is actually a little lower than the percentage the author found for each comic company. Hickey stated that women made up only 29.3% of the DC character list, and we were able to confirm this number when we excluded characters that could not have a gender (ex. a space ship). Hickey also stated that women made up 24.7%, which we were also able to confirm using the same methods.
+
 ```{r}
 # Put code to reverse engineer sentence here
 
-clean_dc |> 
-  filter(appearances >= 1) |> 
+dc_gender <- clean_dc |> 
+  filter(!is.na(sex), appearances >= 1) |> 
   group_by(sex) |> 
    summarise(
     count=n()) |> 
   arrange(desc(count)) |> 
   mutate(percentage = (count/sum(count)*100))
+
 ```
+
 ```{r}
 
-clean_marvel |> 
-  filter(appearances >= 1) |> 
+marvel_gender <- clean_marvel |> 
+  filter(!is.na(sex), appearances >= 1) |> 
   group_by(sex) |> 
    summarise(
     count=n()) |> 
@@ -85,7 +90,9 @@ clean_marvel |>
   mutate(percentage = (count/sum(count)*100))
 
 # Display results of code below this codeblock
-
+ 
+view(dc_gender)
+view(marvel_gender)
 ```
 
 ### Sentence 2
@@ -130,6 +137,9 @@ marvel_girls_gays_they |>
 
 ```{r}
 # Put code to reverse engineer sentence here
+
+womenincomics <- read_csv(data/"2013 Women In")
+
 
 # Display results of code below this codeblock
 
