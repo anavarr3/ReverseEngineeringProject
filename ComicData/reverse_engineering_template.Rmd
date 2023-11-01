@@ -191,12 +191,14 @@ view(marvel_secret_identity)
 
 ### Sentence 4
 
-* **Sentence text**: “The same trend bears out when we look at characters with higher appearance counts. When we zero in on the 2,415 DC and 3,342 Marvel characters with gender data who appear at least 10 times — the set of characters that probably gives the most consistent view of what we see on the page — female characters make up only 30.9 percent of the DC universe and 30.6 percent of the Marvel universe.”
+* **Sentence text**: “When we zero in on the 2,415 DC and 3,342 Marvel characters with gender data who appear at least 10 times — the set of characters that probably gives the most consistent view of what we see on the page — female characters make up only 30.9 percent of the DC universe and 30.6 percent of the Marvel universe.”
  
 * **Analysis summary**: [Write up two to three sentences describing the results of your analysis.  Were you able to confirm the finding? If not, why not?]
 
 ```{r}
 # Put code to reverse engineer sentence here
+# To arrive at the totals, we had to filter out the characters that did not have gender data. Which means instead of 2,415 DC characters and 3,342 Marvel characters, these percentages are out of 2,386 DC and ___ Marvel characters
+
 
 
 DC_10_appearances <- clean_dc |> 
@@ -204,14 +206,19 @@ DC_10_appearances <- clean_dc |>
   filter(!is.na(sex), appearances >= 10) |> 
   group_by(sex) |> 
   summarise(count = n()) |> 
+  mutate(percentage = (count/sum(count)*100)) |> 
   arrange(desc(count))
 
 DC_10_appearances
 
 #clean_marvel
 
-# Display results of code below this codeblock
 
+
+
+
+
+# Display results of code below this codeblock
 ```
 
 
