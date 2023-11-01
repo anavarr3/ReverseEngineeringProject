@@ -92,12 +92,18 @@ marvel_gender <- clean_marvel |>
     count=n()) |> 
   arrange(desc(count)) |> 
   mutate(percentage = (count/sum(count)*100))
+```
 
+
+```{r}
 # Display results of code below this codeblock
  
 view(dc_gender)
 view(marvel_gender)
 ```
+
+
+
 
 ### Sentence 2
 
@@ -107,27 +113,25 @@ view(marvel_gender)
 
 ```{r}
 # Put code to reverse engineer sentence here
-dc_girls_gays_theys <- clean_dc |>
+dc_LGBT <- clean_dc |>
   filter(!is.na(gsm))
 
 
-dc_girls_gays_and_theys <- dc_girls_gays_theys |>
+dc_girls_gays_and_theys <- dc_LGBT |>
   group_by(year) |>
   summarise(
     count_year=n()
   )
 
-marvel_girls_gays_they <- clean_marvel |>
+marvel_LGBT <- clean_marvel |>
   filter(!is.na(gsm))
 
 
-marvel_girls_gays_and_theys <- marvel_girls_gays_they |>
+marvel_girls_gays_and_theys <- marvel_LGBT |>
   group_by(year) |>
   summarise(
     count_year=n()
   )
-
-
 ```
 
 
@@ -136,13 +140,7 @@ marvel_girls_gays_and_theys <- marvel_girls_gays_they |>
 
 view(dc_girls_gays_and_theys)
 
-
 view(marvel_girls_gays_and_theys)
-```
-
-```{r}
-
- 
 ```
 
 ### Sentence 3
@@ -175,7 +173,6 @@ summarise(count=n()) |>
 mutate(percentage = (count/sum(count)*100)) |> 
 arrange(desc(count))
 
-
 # Now for Marvel
 marvel_secret_identity <- clean_marvel |> 
   filter(!is.na(id),
@@ -192,18 +189,32 @@ view(dc_secret_identity)
 view(marvel_secret_identity)
 ```
 
-
 ### Sentence 4
 
-* **Sentence text**: He also estimated that 79 percent of people working on comics this year were white. 
+* **Sentence text**: “The same trend bears out when we look at characters with higher appearance counts. When we zero in on the 2,415 DC and 3,342 Marvel characters with gender data who appear at least 10 times — the set of characters that probably gives the most consistent view of what we see on the page — female characters make up only 30.9 percent of the DC universe and 30.6 percent of the Marvel universe.”
+ 
 * **Analysis summary**: [Write up two to three sentences describing the results of your analysis.  Were you able to confirm the finding? If not, why not?]
 
 ```{r}
 # Put code to reverse engineer sentence here
 
+
+DC_10_appearances <- clean_dc |> 
+  #Add a mutate column for percentage
+  filter(!is.na(sex), appearances >= 10) |> 
+  group_by(sex) |> 
+  summarise(count = n()) |> 
+  arrange(desc(count))
+
+DC_10_appearances
+
+#clean_marvel
+
 # Display results of code below this codeblock
 
 ```
+
+
 
 ### Sentence 5
 
@@ -233,10 +244,7 @@ clean_dc |>
     count=n()) |> 
   arrange(desc(count)) |> 
   mutate(percentage = (count/sum(count)*100))
-# Display results of code below this codeblock
-```
 
-```{r}
 clean_marvel |> 
   filter(appearances >= 1) |> 
   group_by(sex, align) |> 
@@ -244,6 +252,12 @@ clean_marvel |>
     count=n()) |> 
   arrange(desc(count)) |> 
   mutate(percentage = (count/sum(count)*100))
+
+# Display results of code below this codeblock
+```
+
+```{r}
+
 ```
 
 -30-
