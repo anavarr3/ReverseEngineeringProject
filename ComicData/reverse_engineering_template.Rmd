@@ -110,28 +110,39 @@ view(marvel_gender)
 dc_girls_gays_theys <- clean_dc |>
   filter(!is.na(gsm))
 
+
+dc_girls_gays_and_theys <- dc_girls_gays_theys |>
+  group_by(year) |>
+  summarise(
+    count_year=n()
+  )
+
+marvel_girls_gays_they <- clean_marvel |>
+  filter(!is.na(gsm))
+
+
+marvel_girls_gays_and_theys <- marvel_girls_gays_they |>
+  group_by(year) |>
+  summarise(
+    count_year=n()
+  )
+
+
 ```
 
 
 ```{r}
 # Display results of code below this codeblock
-dc_girls_gays_theys |>
-  group_by(year) |>
-  summarise(
-    count_year=n()
-  )
-```
-```{r}
-marvel_girls_gays_they <- clean_marvel |>
-  filter(!is.na(gsm))
+
+view(dc_girls_gays_and_theys)
+
+
+view(marvel_girls_gays_and_theys)
 ```
 
 ```{r}
-marvel_girls_gays_they |>
-  group_by(year) |>
-  summarise(
-    count_year=n()
-  )
+
+ 
 ```
 
 ### Sentence 3
