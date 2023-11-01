@@ -193,16 +193,14 @@ view(marvel_secret_identity)
 
 * **Sentence text**: “When we zero in on the 2,415 DC and 3,342 Marvel characters with gender data who appear at least 10 times — the set of characters that probably gives the most consistent view of what we see on the page — female characters make up only 30.9 percent of the DC universe and 30.6 percent of the Marvel universe.”
  
-* **Analysis summary**: [Write up two to three sentences describing the results of your analysis.  Were you able to confirm the finding? If not, why not?]
+* **Analysis summary**: [Write up two to three sentences describing the results of your analysis.  Were you able to confirm the finding? If not, why not?] 
+
+To arrive at the totals, we had to filter out the characters that did not have gender data. Which means instead of 2,415 DC characters and 3,342 Marvel characters, these percentages are out of 2,386 DC and 3,278 Marvel characters. We have confirmed that there are 30.9% of female characters in the DC universe and 30.6% of female characters in the Marvel universe that appeared at least 10 times. 
 
 ```{r}
 # Put code to reverse engineer sentence here
-# To arrive at the totals, we had to filter out the characters that did not have gender data. Which means instead of 2,415 DC characters and 3,342 Marvel characters, these percentages are out of 2,386 DC and ___ Marvel characters
-
-
 
 DC_10_appearances <- clean_dc |> 
-  #Add a mutate column for percentage
   filter(!is.na(sex), appearances >= 10) |> 
   group_by(sex) |> 
   summarise(count = n()) |> 
@@ -211,12 +209,14 @@ DC_10_appearances <- clean_dc |>
 
 DC_10_appearances
 
-#clean_marvel
+marvel_10_appearances <- clean_marvel |> 
+  filter(!is.na(sex), appearances >= 10) |> 
+  group_by(sex) |> 
+  summarise(count = n()) |> 
+  mutate(percentage = (count/sum(count)*100)) |> 
+  arrange(desc(count))
 
-
-
-
-
+marvel_10_appearances
 
 # Display results of code below this codeblock
 ```
@@ -226,39 +226,33 @@ DC_10_appearances
 ### Sentence 5
 
 * **Sentence text**: In both DC and Marvel, women were of neutral allegiance at a higher rate than men. Men were also more likely to be bad in each universe — in fact, bad-aligned men alone outnumbered all women combined. In other words, there’s something of a paucity of female villains.
-* **Analysis summary**: We found that it holds true that women were less likely to have an evil alignment than men but were more likely to be neutral in both DC and Marvel comics. The original data and our data compare alignment within the sex category.
-We found the following statistics with the data:
-DC:
-Evil men: 46.1%
-Evil women: 30.2%
-Neutral men: 7.7%
-Neutral women: 10.2%
-
-Marvel:
-Evil men: 46.4%
-Evil women: 25.7%
-Neutral men: 12.4%
-Neutral women: 17%
-
+* **Analysis summary**: We found that it holds true that women were less likely to have an evil alignment than men but were more likely to be neutral in both DC and Marvel comics. The original data and our data compare alignment within the sex category and confirmed that male characters in DC are (rounded to the nearest whole number) 50% bad, 42% good, and only 8% neutral. Whereas female characters 34% bad, 54% good, and 12% neutral. In Marvel, female characters are 31% are bad, 48% are good, and 21% are neutral and male characters are 55% bad, 30% good, and 15% are neutral.
 
 
 ```{r}
 # Put code to reverse engineer sentence here
-clean_dc |> 
+
+dc_alignment <- clean_dc |> 
   filter(appearances >= 1) |> 
   group_by(sex, align) |> 
+  filter(!is.na(sex) & !is.na(align)) |> 
+   summarise(
+    count=n()) |> 
+  arrange(desc(count)) |> 
+  mutate(percentage = (count/sum(count)*100))
+   
+dc_alignment
+
+marvel_alignment <- clean_marvel |> 
+  filter(appearances >= 1) |> 
+  group_by(sex, align) |> 
+  filter(!is.na(sex) & !is.na(align)) |> 
    summarise(
     count=n()) |> 
   arrange(desc(count)) |> 
   mutate(percentage = (count/sum(count)*100))
 
-clean_marvel |> 
-  filter(appearances >= 1) |> 
-  group_by(sex, align) |> 
-   summarise(
-    count=n()) |> 
-  arrange(desc(count)) |> 
-  mutate(percentage = (count/sum(count)*100))
+marvel_alignment
 
 
 ```
