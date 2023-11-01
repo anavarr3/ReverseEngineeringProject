@@ -260,10 +260,12 @@ clean_marvel |>
   arrange(desc(count)) |> 
   mutate(percentage = (count/sum(count)*100))
 
-# Display results of code below this codeblock
+
 ```
 
 ```{r}
+# Display results of code below this codeblock
+
 
 ```
 
