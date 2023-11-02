@@ -182,6 +182,13 @@ summarise(count=n()) |>
 mutate(percentage = (count/sum(count)*100)) |> 
 arrange(desc(count))
 ```
+```{r}
+clean_marvel |> 
+  group_by(id) |> 
+  summarise(count = n())
+#count it w/o known to authorities, with public, with secret identity
+```
+
 
 ```{r}
 # Display results of code below this codeblock
