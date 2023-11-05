@@ -48,12 +48,6 @@ In this section, describe the source of the data, write a basic data dictionary 
 dc_data <- read_csv("data/dc-wikia-data.csv")
 marvel_data <- read_csv("data/marvel-wikia-data.csv")
 
-dc_womenincomics2014_comparedto2013 <- read_csv("data/DC 2014 Women In Comics Stats.csv")
-marvel_womenincomics2014_comparedto2013 <- read_csv("data/MARVEL 2014 Women In Comics Stats.csv")
-
-dc_womenincomics2014_month <- read_csv("data/MONTH DC Women In Comics 2014.csv")
-marvel_womenincomics2014_month <- read_csv("data/MONTH MARVEL Women In Comics 2014.csv")
-
 # Clean required data and prepare for analysis if needed. 
 
 clean_dc <- clean_names(dc_data)
