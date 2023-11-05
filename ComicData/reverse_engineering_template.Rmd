@@ -19,7 +19,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Introduction 
 
-In this notebook, we are reverse engineering the story, [STORY NAME](STORY URL)
+In this notebook, we are reverse engineering the story, [Comic Books Are Still Made By Men, For Men And About Men](https://fivethirtyeight.com/features/women-in-comic-books/)
 
 ## Load libraries
 
@@ -152,7 +152,7 @@ view(marvel_girls_gays_and_theys)
 
 * **Analysis summary**: [Write up two to three sentences describing the results of your analysis.  Were you able to confirm the finding? If not, why not?]
 
-Like sentence 1, we had to take out the characters that could not have a gender as well as the characters that could not have a secret identity (we figured these were more of background/filler characters). Once we took out those characters, we were able to come to the same conclusion as Hickey. The Marvel one was slightly different. We still ended up with 49.4 percent of males but 49.4 percent for females as well instead of 49.5.
+Like sentence 1, we had to take out the characters that could not have a gender as well as the characters that could not have a secret identity (we figured these were more of background/filler characters). Once we took out those characters, we were able to come to the same conclusion as Hickey. The Marvel one was slightly different. We still ended up with 49.4 percent of males but 49.4 percent for females stated in the article, our code gave us 49.5. This finding proves the alarming fact that men may be slightly more likely to be superheroes or villains — rather than just normal, unpowered side characters — than women superheros are found in the DC universe.
 
 
 ```{r}
@@ -191,6 +191,19 @@ clean_marvel |>
   group_by(id) |> 
   summarise(count = n())
 #count it w/o known to authorities, with public, with secret identity
+```
+
+```{r}
+marvel_secret_identity_without_known_authorities <- clean_marvel |> 
+  filter(!is.na(sex),
+         !is.na(id),
+         id != "Known To Authorities Identity") |>  # Exclude rows with the title "known to authorities"
+  group_by(sex, id) |> 
+  summarise(count=n()) |> 
+  mutate(percentage = (count/sum(count)*100)) |> 
+  arrange(desc(count))
+
+view(marvel_secret_identity_without_known_authorities)
 ```
 
 # Display results of code below this codeblock
