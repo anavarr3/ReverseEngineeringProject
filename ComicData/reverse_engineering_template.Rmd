@@ -73,6 +73,7 @@ In this notebook, we are reverse engineering five sentences from the story.
 ```{r}
 # Put code to reverse engineer sentence here
 
+#DC code
 dc_gender <- clean_dc |> 
   filter(!is.na(sex), appearances >= 1) |> 
   group_by(sex) |> 
@@ -84,7 +85,7 @@ dc_gender <- clean_dc |>
 ```
 
 ```{r}
-
+#Marvel code
 marvel_gender <- clean_marvel |> 
   filter(!is.na(sex), appearances >= 1) |> 
   group_by(sex) |> 
@@ -94,15 +95,14 @@ marvel_gender <- clean_marvel |>
   mutate(percentage = (count/sum(count)*100))
 ```
 
-
-```{r}
 # Display results of code below this codeblock
- 
+```{r}
 view(dc_gender)
-view(marvel_gender)
 ```
 
-
+```{r}
+view(marvel_gender)
+```
 
 
 ### Sentence 2
@@ -113,9 +113,10 @@ view(marvel_gender)
 
 ```{r}
 # Put code to reverse engineer sentence here
+
+#DC code
 dc_LGBT <- clean_dc |>
   filter(!is.na(gsm))
-
 
 dc_girls_gays_and_theys <- dc_LGBT |>
   group_by(year) |>
@@ -123,6 +124,8 @@ dc_girls_gays_and_theys <- dc_LGBT |>
     count_year=n()
   )
 
+
+# Marvel code
 marvel_LGBT <- clean_marvel |>
   filter(!is.na(gsm))
 
@@ -134,12 +137,12 @@ marvel_girls_gays_and_theys <- marvel_LGBT |>
   )
 ```
 
+# Display results of code below this codeblock
+```{r}
+view(dc_girls_gays_and_theys)
+```
 
 ```{r}
-# Display results of code below this codeblock
-
-view(dc_girls_gays_and_theys)
-
 view(marvel_girls_gays_and_theys)
 ```
 
@@ -182,6 +185,7 @@ summarise(count=n()) |>
 mutate(percentage = (count/sum(count)*100)) |> 
 arrange(desc(count))
 ```
+
 ```{r}
 clean_marvel |> 
   group_by(id) |> 
@@ -189,10 +193,12 @@ clean_marvel |>
 #count it w/o known to authorities, with public, with secret identity
 ```
 
+# Display results of code below this codeblock
+```{r}
+view(dc_secret_identity)
+```
 
 ```{r}
-# Display results of code below this codeblock
-view(dc_secret_identity)
 view(marvel_secret_identity)
 ```
 
@@ -207,6 +213,7 @@ To arrive at the totals, we had to filter out the characters that did not have g
 ```{r}
 # Put code to reverse engineer sentence here
 
+#DC code
 DC_10_appearances <- clean_dc |> 
   filter(!is.na(sex), appearances >= 10) |> 
   group_by(sex) |> 
@@ -214,8 +221,7 @@ DC_10_appearances <- clean_dc |>
   mutate(percentage = (count/sum(count)*100)) |> 
   arrange(desc(count))
 
-DC_10_appearances
-
+#Marvel code
 marvel_10_appearances <- clean_marvel |> 
   filter(!is.na(sex), appearances >= 10) |> 
   group_by(sex) |> 
@@ -223,22 +229,26 @@ marvel_10_appearances <- clean_marvel |>
   mutate(percentage = (count/sum(count)*100)) |> 
   arrange(desc(count))
 
-marvel_10_appearances
-
-# Display results of code below this codeblock
 ```
 
+# Display results of code below this codeblock
+```{r}
+DC_10_appearances
+```
 
+```{r}
+marvel_10_appearances
+```
 
 ### Sentence 5
 
 * **Sentence text**: In both DC and Marvel, women were of neutral allegiance at a higher rate than men. Men were also more likely to be bad in each universe — in fact, bad-aligned men alone outnumbered all women combined. In other words, there’s something of a paucity of female villains.
 * **Analysis summary**: We found that it holds true that women were less likely to have an evil alignment than men but were more likely to be neutral in both DC and Marvel comics. The original data and our data compare alignment within the sex category and confirmed that male characters in DC are (rounded to the nearest whole number) 50% bad, 42% good, and only 8% neutral. Whereas female characters 34% bad, 54% good, and 12% neutral. In Marvel, female characters are 31% are bad, 48% are good, and 21% are neutral and male characters are 55% bad, 30% good, and 15% are neutral.
 
-
 ```{r}
 # Put code to reverse engineer sentence here
 
+#DC alignment code
 dc_alignment <- clean_dc |> 
   filter(appearances >= 1) |> 
   group_by(sex, align) |> 
@@ -248,8 +258,7 @@ dc_alignment <- clean_dc |>
   arrange(desc(count)) |> 
   mutate(percentage = (count/sum(count)*100))
    
-dc_alignment
-
+#Marvel alignment code
 marvel_alignment <- clean_marvel |> 
   filter(appearances >= 1) |> 
   group_by(sex, align) |> 
@@ -258,16 +267,15 @@ marvel_alignment <- clean_marvel |>
     count=n()) |> 
   arrange(desc(count)) |> 
   mutate(percentage = (count/sum(count)*100))
+```
 
-marvel_alignment
-
-
+# Display results of code below this codeblock
+```{r}
+dc_alignment
 ```
 
 ```{r}
-# Display results of code below this codeblock
-
-
+marvel_alignment
 ```
 
 -30-
